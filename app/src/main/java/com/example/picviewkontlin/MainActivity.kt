@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         val imageList = fetchImagesList()
 
-        val allImagesAdapter = AllImagesAdapter(imageList)
+        val allImagesAdapter = AllImagesAdapter(imageList,applicationContext)
         allPhotoRecyclerView.adapter = allImagesAdapter
     }
 
