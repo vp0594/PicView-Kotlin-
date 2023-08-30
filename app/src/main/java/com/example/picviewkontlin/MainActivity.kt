@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,46 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         updateOrRequestPermission()
 
-        val allPhotoRecyclerView: RecyclerView = findViewById(R.id.allPhotoRecyclerView)
-        allPhotoRecyclerView.layoutManager = GridLayoutManager(this, 4)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager = findViewById<ViewPager>(R.id.viewPager)
 
-        val imageList = fetchImagesList()
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
+        tabLayout.setupWithViewPager(viewPager)
 
-        val allImagesAdapter = AllImagesAdapter(imageList,applicationContext)
-        allPhotoRecyclerView.adapter = allImagesAdapter
-    }
-
-    private fun fetchImagesList(): ArrayList<Uri> {
-        val imageList = arrayListOf<Uri>()
-
-        val projection = arrayOf(
-            MediaStore.Images.Media._ID
-        )
-
-        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
-
-        val query = applicationContext.contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            null,
-            null,
-            sortOrder
-        )
-
-        query?.use { cursor ->
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(idColumn)
-                val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    id
-                )
-                imageList.add(contentUri)
-            }
-        }
-
-        return imageList
     }
 
     private fun updateOrRequestPermission() {
