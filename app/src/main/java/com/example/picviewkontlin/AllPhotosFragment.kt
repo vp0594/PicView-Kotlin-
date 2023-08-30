@@ -1,6 +1,6 @@
 package com.example.picviewkontlin
 
-import AllImagesAdapter
+import AllIPhotosAdapter
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
@@ -20,6 +20,7 @@ class AllPhotosFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_all_photos, container, false)
         val context: Context? = activity?.applicationContext
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.allPhotoRecyclerView)
         recyclerView.isNestedScrollingEnabled = false
 
@@ -28,7 +29,7 @@ class AllPhotosFragment : Fragment() {
 
         val imageList = fetchImagesList()
 
-        val allImagesAdapter = context?.let { AllImagesAdapter(imageList, it) }
+        val allImagesAdapter = context?.let { AllIPhotosAdapter(imageList, it) }
         allPhotoRecyclerView.adapter = allImagesAdapter
         return view
     }

@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.picviewkontlin.FullScreenImageSlider
-import com.example.picviewkontlin.ImageSliderAdapter
+import com.example.picviewkontlin.FullScreenPhotosSlider
 import com.example.picviewkontlin.R
 
 
-class AllImagesAdapter(private val allImageList: ArrayList<Uri>, private val context: Context) :
-    RecyclerView.Adapter<AllImagesAdapter.ViewHolder>() {
+class AllIPhotosAdapter(private val allImageList: ArrayList<Uri>, private val context: Context) :
+    RecyclerView.Adapter<AllIPhotosAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView =
@@ -27,7 +26,7 @@ class AllImagesAdapter(private val allImageList: ArrayList<Uri>, private val con
             .into(holder.itemView.findViewById(R.id.allPhotoImageView))
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, FullScreenImageSlider::class.java)
+            val intent = Intent(context, FullScreenPhotosSlider::class.java)
             intent.putParcelableArrayListExtra("allPhotoList", allImageList)
             intent.putExtra("currentPosition", position)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

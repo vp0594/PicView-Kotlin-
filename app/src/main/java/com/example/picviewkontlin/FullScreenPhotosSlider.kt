@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 
-class FullScreenImageSlider : AppCompatActivity() {
+class FullScreenPhotosSlider : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_screen_image_slider)
@@ -15,7 +15,7 @@ class FullScreenImageSlider : AppCompatActivity() {
 
         val allPhotoViewPager: ViewPager2 = findViewById(R.id.allPhotoViewPager)
 
-        val imageSliderAdapter = allPhotoList?.let { ImageSliderAdapter(it,applicationContext) }
+        val imageSliderAdapter = allPhotoList?.let { PhotoSliderAdapter(it,applicationContext) }
         allPhotoViewPager.adapter=imageSliderAdapter
         allPhotoViewPager.currentItem=currentPosition
     }

@@ -18,7 +18,12 @@
         android:theme="@style/Theme.PicViewKontlin"
         tools:targetApi="31">
         <activity
-            android:name=".FullScreenImageSlider"
+            android:name=".ClickAlbumPhotosActivity"
+            android:exported="false"
+            android:label="@string/title_activity_click_album_images"
+            android:theme="@style/Theme.PicViewKontlin" />
+        <activity
+            android:name=".FullScreenPhotosSlider"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

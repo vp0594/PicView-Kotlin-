@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ImageSliderAdapter(private val allImageList: ArrayList<Uri>, private val context: Context) :
-    RecyclerView.Adapter<ImageSliderAdapter.ViewHolder>() {
+class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val context: Context) :
+    RecyclerView.Adapter<PhotoSliderAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
