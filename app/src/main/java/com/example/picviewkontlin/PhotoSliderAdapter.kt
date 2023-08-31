@@ -26,20 +26,8 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photoPath: Uri = allImageList[position]
-        var slideImageView: ImageView = holder.itemView.findViewById(R.id.sliderImageView)
+        val slideImageView: ImageView = holder.itemView.findViewById(R.id.sliderImageView)
         Glide.with(context).load(photoPath).into(slideImageView)
-        var bottomNavigationView: BottomNavigationView =
-            holder.itemView.findViewById(R.id.bottomNavigationView)
-
-        // IF I RUN THIS MY IMAGES WILL ZOOM IN AND OUT BUT IT WILL NOT SHOW MENU
-//        holder.itemView.setOnClickListener {
-//            bottomNavigationView.visibility =
-//                if (bottomNavigationView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-//        }
-
-        // IF I RUN THIS IT WILL SHOW MENU BUT I CAN NO LONGER ZOOM IN OR OUT PHOTO
-        slideImageView.setOnClickListener {  bottomNavigationView.visibility =
-            if (bottomNavigationView.visibility == View.VISIBLE) View.GONE else View.VISIBLE }
 
     }
 
@@ -47,3 +35,5 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
 
     }
 }
+
+
