@@ -41,6 +41,7 @@ class AlbumsFragment : Fragment(), AlbumAdapter.AlbumClickListener {
 
         val intent = Intent(requireContext(), ClickAlbumPhotosActivity::class.java)
         val allImageList = fetchImagesList(folderName)
+        intent.putExtra("FolderName",folderName)
         intent.putParcelableArrayListExtra("allPhotoList", allImageList)
         startActivity(intent)
     }
