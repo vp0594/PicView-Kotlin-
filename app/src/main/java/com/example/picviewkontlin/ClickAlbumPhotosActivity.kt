@@ -24,6 +24,8 @@ class ClickAlbumPhotosActivity : AppCompatActivity() {
 
         val allImagesAdapter = allPhotoList?.let { AllIPhotosAdapter(it, applicationContext) }
         albumsImageRecyclerview.adapter = allImagesAdapter
+
+
     }
 }
 
