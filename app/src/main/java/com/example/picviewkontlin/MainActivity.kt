@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +20,16 @@ class MainActivity : AppCompatActivity() {
         updateOrRequestPermission()
 
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        val viewPager = findViewById<ViewPager>(R.id.viewPager)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
 
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        tabLayout.setupWithViewPager(viewPager)
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "All Photos"
+                1 -> tab.text = "Albums"
+            }
 
+        }.attach()
     }
 
     private fun updateOrRequestPermission() {
