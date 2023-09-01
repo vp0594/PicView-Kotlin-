@@ -3,10 +3,8 @@ package com.example.picviewkontlin
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class FullScreenPhotosSlider : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,14 +1,20 @@
 package com.example.picviewkontlin
 
+
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomappbar.BottomAppBar
+
 
 class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val context: Context) :
     RecyclerView.Adapter<PhotoSliderAdapter.ViewHolder>() {
@@ -29,7 +35,63 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
         val slideImageView: ImageView = holder.itemView.findViewById(R.id.sliderImageView)
         Glide.with(context).load(photoPath).into(slideImageView)
 
+        val bottomMenu: BottomAppBar = holder.itemView.findViewById(R.id.bottomMenu)
+
+        bottomMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.share -> {
+                    val mimeType = getImageMimeType(context, photoPath)
+
+                    if (mimeType != null) {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = mimeType
+
+                        intent.putExtra(Intent.EXTRA_STREAM, photoPath)
+                        intent.putExtra(Intent.EXTRA_TEXT, "Sharing Image")
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+
+                        val activityContext = holder.itemView.context as? Activity
+                        activityContext?.startActivity(Intent.createChooser(intent, "Share Via"))
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Failed to determine image type",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    true
+                }
+
+                R.id.fav -> {
+                    // Handle the favorite action
+                    Toast.makeText(context, "Favorite clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.delete -> {
+                    // Handle the delete action
+                    Toast.makeText(context, "Delete clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                else -> false
+            }
+        }
+        bottomMenu.visibility = View.GONE
+        slideImageView.setOnClickListener {
+            Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show()
+            bottomMenu.visibility =
+                if (bottomMenu.visibility == View.GONE) View.VISIBLE else View.GONE
+        }
+
     }
+
+    private fun getImageMimeType(context: Context, uri: Uri): String? {
+        val contentResolver = context.contentResolver
+        return contentResolver.getType(uri)
+    }
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
