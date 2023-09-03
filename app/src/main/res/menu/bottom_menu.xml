@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/fav"
-        android:icon="@android:drawable/btn_star_big_on"
+        android:icon="@android:drawable/btn_star_big_off"
         android:title="Favorite"
         android:orderInCategory="2"
         app:showAsAction="ifRoom" />
