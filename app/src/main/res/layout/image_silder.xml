@@ -9,6 +9,7 @@
         android:id="@+id/sliderImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:theme="@style/Base.Theme.PicViewKontlin"
         app:zoomage_animateOnReset="true"
         app:zoomage_autoCenter="true"
         app:zoomage_autoResetMode="UNDER"
@@ -21,8 +22,10 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_menu"/>
+        android:visibility="gone"
+        android:theme="@style/Base.Theme.PicViewKontlin"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
