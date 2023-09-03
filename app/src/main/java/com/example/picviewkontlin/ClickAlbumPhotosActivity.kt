@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,18 +15,29 @@ class ClickAlbumPhotosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_click_album_images)
 
-        var albumsTextView: TextView = findViewById(R.id.albumsTextView)
-        albumsTextView.text = intent.getStringExtra("FolderName")
+        var FolderName: String? = intent.getStringExtra("FolderName")
 
-        var albumsImageRecyclerview: RecyclerView = findViewById(R.id.albumsImageRecyclerView)
+
+        val albumsImageRecyclerview: RecyclerView = findViewById(R.id.albumsImageRecyclerView)
         albumsImageRecyclerview.layoutManager = GridLayoutManager(this, 4)
 
-        val allPhotoList: ArrayList<Uri>? = intent.getParcelableArrayListExtra("allPhotoList")
 
-        val allImagesAdapter = allPhotoList?.let { AllIPhotosAdapter(it, applicationContext) }
-        albumsImageRecyclerview.adapter = allImagesAdapter
+        if (FolderName != null) {
+            val albumsTextView: TextView = findViewById(R.id.albumsTextView)
+            albumsTextView.text = FolderName
 
+            val allPhotoList: ArrayList<Uri>? = intent.getParcelableArrayListExtra("allPhotoList")
 
+            val allImagesAdapter = allPhotoList?.let { AllIPhotosAdapter(it, applicationContext) }
+            albumsImageRecyclerview.adapter = allImagesAdapter
+
+        } else {
+            val databaseHandler = DatabaseHandler(applicationContext)
+            val allPhotoList = databaseHandler.getAllImages()
+
+            val allImagesAdapter = AllIPhotosAdapter(allPhotoList, applicationContext)
+            albumsImageRecyclerview.adapter = allImagesAdapter
+        }
     }
 }
 

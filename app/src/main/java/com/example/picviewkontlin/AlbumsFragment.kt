@@ -9,6 +9,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,12 @@ class AlbumsFragment : Fragment(), AlbumAdapter.AlbumClickListener {
         val view: View = inflater.inflate(R.layout.fragment_albums, container, false)
         val context: Context? = activity?.applicationContext
 
+        val favBtn: Button = view.findViewById(R.id.favBtn)
+        favBtn.setOnClickListener {
+            val intent = Intent(requireContext(), ClickAlbumPhotosActivity::class.java)
+            startActivity(intent)
+        }
+
         albumsRecyclerView = view.findViewById(R.id.albumsRecyclerView)
         albumsRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
@@ -41,7 +49,7 @@ class AlbumsFragment : Fragment(), AlbumAdapter.AlbumClickListener {
 
         val intent = Intent(requireContext(), ClickAlbumPhotosActivity::class.java)
         val allImageList = fetchImagesList(folderName)
-        intent.putExtra("FolderName",folderName)
+        intent.putExtra("FolderName", folderName)
         intent.putParcelableArrayListExtra("allPhotoList", allImageList)
         startActivity(intent)
     }
@@ -53,7 +61,7 @@ class AlbumsFragment : Fragment(), AlbumAdapter.AlbumClickListener {
         val selection = "${MediaStore.Images.Media.BUCKET_DISPLAY_NAME} = ?"
         val selectionArgs = arrayOf(folderName)
 
-        val cursor =  context?.contentResolver?.query(
+        val cursor = context?.contentResolver?.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
             selection,
@@ -91,7 +99,8 @@ class AlbumsFragment : Fragment(), AlbumAdapter.AlbumClickListener {
         val albumMap = mutableMapOf<String, String>()
 
         cursor?.use {
-            val folderNameColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            val folderNameColumn =
+                it.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
             val imagePathColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
 
             while (it.moveToNext()) {

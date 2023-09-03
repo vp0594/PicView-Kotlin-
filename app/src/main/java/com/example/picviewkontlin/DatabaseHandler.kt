@@ -35,6 +35,30 @@ class DatabaseHandler(context: Context) :
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_IMAGES")
         onCreate(db)
     }
+    fun getAllImages(): ArrayList<Uri> {
+        val uris = ArrayList<Uri>()
+        val selectQuery = "SELECT $KEY_URI FROM $TABLE_IMAGES"
+        val db = this.readableDatabase
+        var cursor: Cursor? = null
+
+        try {
+            cursor = db.rawQuery(selectQuery, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    val uriString = cursor.getString(cursor.getColumnIndex(KEY_URI))
+                    val uri = Uri.parse(uriString)
+                    uris.add(uri)
+                } while (cursor.moveToNext())
+            }
+        } catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return ArrayList()
+        } finally {
+            cursor?.close()
+        }
+
+        return uris
+    }
 
     fun addImage(imageItem: ImageItem): Long {
         val db = this.writableDatabase
