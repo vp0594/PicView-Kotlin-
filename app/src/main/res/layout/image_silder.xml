@@ -19,13 +19,5 @@
         app:zoomage_translatable="true"
         app:zoomage_zoomable="true" />
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
-        android:theme="@style/Base.Theme.PicViewKontlin"
-        app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
