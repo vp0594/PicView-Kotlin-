@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/cl"
-    android:orientation="vertical"
     tools:context=".FullScreenPhotosSlider">
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/allPhotoViewPager"
@@ -16,5 +15,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/actionView"
+        android:name="com.example.picviewkontlin.ActionFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_action" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,17 @@
 package com.example.picviewkontlin
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 
 
 class FullScreenPhotosSlider : AppCompatActivity() {
+
+    companion object {
+        lateinit var allPhotoList: ArrayList<Uri>
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +23,13 @@ class FullScreenPhotosSlider : AppCompatActivity() {
         )
 
 
-        val allPhotoList: ArrayList<Uri>? = intent.getParcelableArrayListExtra("allPhotoList")
+        @Suppress("DEPRECATION")
+        allPhotoList = intent.getParcelableArrayListExtra("allPhotoList")!!
         val currentPosition: Int = intent.getIntExtra("currentPosition", 0)
 
         val allPhotoViewPager: ViewPager2 = findViewById(R.id.allPhotoViewPager)
 
-        val imageSliderAdapter = allPhotoList?.let { PhotoSliderAdapter(it, applicationContext) }
+        val imageSliderAdapter = PhotoSliderAdapter(allPhotoList, applicationContext)
         allPhotoViewPager.adapter = imageSliderAdapter
         allPhotoViewPager.currentItem = currentPosition
 
