@@ -36,7 +36,6 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
         val photoPath: Uri = allImageList[position]
         val slideImageView: ImageView = holder.itemView.findViewById(R.id.sliderImageView)
         Glide.with(context).load(photoPath).into(slideImageView)
-
         slideImageView.setOnClickListener {
             if (ActionFragment.binding.root.visibility == View.INVISIBLE) {
                 ActionFragment.binding.root.visibility = View.VISIBLE
@@ -80,23 +79,6 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
         }
 
         val databaseHandler = DatabaseHandler(context)
-
-
-        if (databaseHandler.isImageInDatabase(allImageList[position])) {
-            ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_filled)
-        } else {
-            ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_border)
-        }
-
-        ActionFragment.binding.favoritesBtn.setOnClickListener {
-            if (databaseHandler.isImageInDatabase(allImageList[position])) {
-                databaseHandler.deleteImageByUri(allImageList[position])
-                ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_border)
-            } else {
-                databaseHandler.addImage(ImageItem(allImageList[position]))
-                ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_filled)
-            }
-        }
 
         ActionFragment.binding.deleteBtn.setOnClickListener {
             Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show()
