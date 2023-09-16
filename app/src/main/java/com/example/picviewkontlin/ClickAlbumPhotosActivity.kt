@@ -7,13 +7,16 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.picviewkontlin.databinding.ActivityClickAlbumImagesBinding
 
 
 class ClickAlbumPhotosActivity : AppCompatActivity() {
     private lateinit var folderName:String
+    lateinit var binding : ActivityClickAlbumImagesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_click_album_images)
+        binding = ActivityClickAlbumImagesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         folderName= intent.getStringExtra("FolderName")?:"Favorites"
 
@@ -32,13 +35,24 @@ class ClickAlbumPhotosActivity : AppCompatActivity() {
             albumsImageRecyclerview.adapter = allImagesAdapter
 
         } else {
-            val databaseHandler = DatabaseHandler(applicationContext)
-            val allPhotoList = databaseHandler.getAllImages()
-
-            val allImagesAdapter = AllIPhotosAdapter(allPhotoList, applicationContext)
-            albumsImageRecyclerview.adapter = allImagesAdapter
+            setFavoritesAdapter()
         }
     }
+
+    private fun setFavoritesAdapter() {
+        val databaseHandler = DatabaseHandler(applicationContext)
+        val allPhotoList = databaseHandler.getAllImages()
+
+        val allImagesAdapter = AllIPhotosAdapter(allPhotoList, applicationContext)
+        binding.albumsImageRecyclerView.adapter = allImagesAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(folderName == "Favorites")
+            setFavoritesAdapter()
+    }
+
 }
 
 
