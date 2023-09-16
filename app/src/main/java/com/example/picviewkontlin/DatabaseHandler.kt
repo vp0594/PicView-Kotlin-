@@ -1,5 +1,6 @@
 package com.example.picviewkontlin
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -35,6 +36,7 @@ class DatabaseHandler(context: Context) :
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_IMAGES")
         onCreate(db)
     }
+    @SuppressLint("Range")
     fun getAllImages(): ArrayList<Uri> {
         val uris = ArrayList<Uri>()
         val selectQuery = "SELECT $KEY_URI FROM $TABLE_IMAGES"
@@ -80,8 +82,8 @@ class DatabaseHandler(context: Context) :
     fun isImageInDatabase(uri: Uri): Boolean {
         val uriString = uri.toString()
         val db = this.readableDatabase
-        val selectQuery = "SELECT $KEY_URI FROM $TABLE_IMAGES WHERE $KEY_URI = ?"
-        val cursor = db.rawQuery(selectQuery, arrayOf(uriString))
+        val selectQuery = "SELECT * FROM $TABLE_IMAGES WHERE $KEY_URI = '$uriString'"
+        val cursor = db.rawQuery(selectQuery,null)
         val exists = cursor.count > 0
         cursor.close()
         return exists

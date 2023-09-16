@@ -5,26 +5,29 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.picviewkontlin.databinding.ActivityClickAlbumImagesBinding
 
 
 class ClickAlbumPhotosActivity : AppCompatActivity() {
+    private lateinit var folderName:String
+    lateinit var binding : ActivityClickAlbumImagesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_click_album_images)
+        binding = ActivityClickAlbumImagesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        var FolderName: String? = intent.getStringExtra("FolderName")
+        folderName= intent.getStringExtra("FolderName")?:"Favorites"
 
 
         val albumsImageRecyclerview: RecyclerView = findViewById(R.id.albumsImageRecyclerView)
         albumsImageRecyclerview.layoutManager = GridLayoutManager(this, 4)
 
 
-        if (FolderName != null) {
-            val albumsTextView: TextView = findViewById(R.id.albumsTextView)
-            albumsTextView.text = FolderName
+        val albumsTextView: TextView = findViewById(R.id.albumsTextView)
+        albumsTextView.text = folderName
+        if (folderName != "Favorites") {
 
             val allPhotoList: ArrayList<Uri>? = intent.getParcelableArrayListExtra("allPhotoList")
 
@@ -32,13 +35,24 @@ class ClickAlbumPhotosActivity : AppCompatActivity() {
             albumsImageRecyclerview.adapter = allImagesAdapter
 
         } else {
-            val databaseHandler = DatabaseHandler(applicationContext)
-            val allPhotoList = databaseHandler.getAllImages()
-
-            val allImagesAdapter = AllIPhotosAdapter(allPhotoList, applicationContext)
-            albumsImageRecyclerview.adapter = allImagesAdapter
+            setFavoritesAdapter()
         }
     }
+
+    private fun setFavoritesAdapter() {
+        val databaseHandler = DatabaseHandler(applicationContext)
+        val allPhotoList = databaseHandler.getAllImages()
+
+        val allImagesAdapter = AllIPhotosAdapter(allPhotoList, applicationContext)
+        binding.albumsImageRecyclerView.adapter = allImagesAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(folderName == "Favorites")
+            setFavoritesAdapter()
+    }
+
 }
 
 

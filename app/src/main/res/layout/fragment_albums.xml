@@ -8,7 +8,7 @@
         android:id="@+id/favBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="fav" />
+        android:text="Favorites" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumsRecyclerView"
