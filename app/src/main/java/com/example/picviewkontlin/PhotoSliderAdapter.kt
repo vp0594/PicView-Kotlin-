@@ -79,24 +79,22 @@ class PhotoSliderAdapter(private val allImageList: ArrayList<Uri>, private val c
             false
         }
 
-        val favoriteAction = ActionFragment.binding.favoritesBtn
         val databaseHandler = DatabaseHandler(context)
 
 
         if (databaseHandler.isImageInDatabase(allImageList[position])) {
-            favoriteAction.setImageResource(R.drawable.ic_favorite_filled)
+            ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_filled)
         } else {
-            favoriteAction.setImageResource(R.drawable.ic_favorite_border)
+            ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_border)
         }
 
-        favoriteAction.setOnClickListener {
+        ActionFragment.binding.favoritesBtn.setOnClickListener {
             if (databaseHandler.isImageInDatabase(allImageList[position])) {
                 databaseHandler.deleteImageByUri(allImageList[position])
-                favoriteAction.setImageResource(R.drawable.ic_favorite_filled)
-
+                ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_border)
             } else {
                 databaseHandler.addImage(ImageItem(allImageList[position]))
-                favoriteAction.setImageResource(R.drawable.ic_favorite_border)
+                ActionFragment.binding.favoritesBtn.setImageResource(R.drawable.ic_favorite_filled)
             }
         }
 
