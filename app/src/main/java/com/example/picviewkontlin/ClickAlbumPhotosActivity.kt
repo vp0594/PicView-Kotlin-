@@ -5,26 +5,26 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
 class ClickAlbumPhotosActivity : AppCompatActivity() {
+    private lateinit var folderName:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_click_album_images)
 
-        var FolderName: String? = intent.getStringExtra("FolderName")
+        folderName= intent.getStringExtra("FolderName")?:"Favorites"
 
 
         val albumsImageRecyclerview: RecyclerView = findViewById(R.id.albumsImageRecyclerView)
         albumsImageRecyclerview.layoutManager = GridLayoutManager(this, 4)
 
 
-        if (FolderName != null) {
-            val albumsTextView: TextView = findViewById(R.id.albumsTextView)
-            albumsTextView.text = FolderName
+        val albumsTextView: TextView = findViewById(R.id.albumsTextView)
+        albumsTextView.text = folderName
+        if (folderName != "Favorites") {
 
             val allPhotoList: ArrayList<Uri>? = intent.getParcelableArrayListExtra("allPhotoList")
 
